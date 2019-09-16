@@ -16,4 +16,4 @@ env:
   - SDL_AUDIODRIVER=dummy
 
 # Run the tests
-script: ./renpy.sh "../Coyote-Creek/" lint
+script: ./renpy.sh "../Coyote-Creek/" lint && ./renpy.sh launcher distribute "../Coyote-Creek/"
