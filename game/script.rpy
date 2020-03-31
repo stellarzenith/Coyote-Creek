@@ -10,6 +10,7 @@
         # ---CHARACTER CREATION--- #
         # ---INTRODUCTION--- #
         # ---DAYS OF THE WEEK--- #
+        # ---LOCATIONS--- #
         # ---NPC DIALOGUE--- #
         # ---ROMANTIC EVENTS--- #
         #
@@ -57,16 +58,34 @@ label start:
     $ hastiinpoints = 0
     $ javierpoints = 0
     $ rileypoints = 0
-        # ---Current day--- #
+        # ---Current day & location--- #
     $ currentday = "Monday"
-    $ currenttime = "Afternoon"
+    $ currenttime = "Morning"
+    $ currentloc = "motelroom"
         # ---Events done--- #
-    $ monevent = "None"
-    $ tueevent = "None"
-    $ wedevent = "None"
-    $ thuevent = "None"
-    $ frievent = "None"
-    $ satevent = "None"
+    $ monevent = "none"
+    $ tueevent = "none"
+    $ wedevent = "none"
+    $ thuevent = "none"
+    $ frievent = "none"
+    $ satevent = "none"
+        # ---NPC Locations--- #
+    $ normanloc = "none"
+    $ mikeloc = "none"
+    $ kesslerloc = "none"
+    $ scottloc = "none"
+    $ lizloc = "none"
+    $ julieloc = "none"
+    $ rosaloc = "none"
+    $ brandyloc = "none"
+    $ loriloc = "none"
+    $ marieloc = "none"
+    $ billyloc = "none"
+    $ joaquinloc = "none"
+    $ hernandezloc = "none"
+    $ hastiinloc = "none"
+    $ javierloc = "none"
+    $ rileyloc = "none"
         # ---Has a character been talked to today?--- #
     $ normantalkedto = 0
     $ miketalkedto = 0
@@ -86,6 +105,7 @@ label start:
     $ rileytalkedto = 0
         # ---Array of every talked to status. Resets every day--- #
     $ talkedto = [normantalkedto, miketalkedto, kesslertalkedto, scotttalkedto, liztalkedto, julietalkedto, rosatalkedto, brandytalkedto, loritalkedto, marietalkedto, billytalkedto, joaquintalkedto, hernandeztalkedto, hastiintalkedto, javiertalkedto, rileytalkedto]
+
         #
         # ---CHARACTER CREATION--- #
         #
@@ -130,7 +150,7 @@ label start:
         "He furrows his brow and glances toward the van."
         n "\"I don't understand anything about what happened... The engine was perfect.\""
         "He shakes the worry from his face and gives me a small smile, his eyes sparkling."
-        n "\"How about you see the mechanic about it. I'll find us some food.\""
+        n "\"How about you see the mechanic about it? I'll find us some food.\""
         "Before disappearing, he waves over his shoulder and shouts."
         n "\"I’ll try to find a local map too!\""
         hide n
@@ -178,7 +198,7 @@ label start:
         scene bg motel afternoon
         with fade
         "The motel lobby is way too brightly lit. The decorating in here is tacky, and it’s clear they don’t get a lot of business."
-        "Behind the front desk sits a woman with brown hair and light eyes who doesn’t look like she wants to be there at all."
+        "Behind the front desk sits a woman with light hair and green eyes who doesn’t look like she wants to be there at all."
         "She’s flipping through a magazine absentmindedly. I don’t think she’s even noticed I’m here yet."
         show l
         with dissolve
@@ -226,7 +246,7 @@ label start:
         "I clear my throat and make my presence known. The man jolts awake and his eyes light up at the sight of a potential customer."
         show s
         with dissolve
-        "His relation to Liz is evident in his face. He has the same brown hair and light eyes, though he looks considerably less stern and more uncertain."
+        "His relation to Liz is evident in his face. He has the same light hair and green eyes, though he looks considerably less stern and more uncertain."
         s "\"Welcome to Cooper's Motel & Gift Store! I'm Scott, what can I do for you?\""
         player "\"Just looking... I'm [name]. I'm new in town and thought I'd introduce myself.\""
         "He looks a bit let down, but quickly regains his cheery composure."
@@ -265,13 +285,14 @@ label start:
         show n
         with dissolve
         player "\"Ugh... What time is it?\""
-        n "\"Eight. The diner's doing a breakfast deal, come on.\""
+        n "\"Eight. The diner's doing a breakfast special, come on.\""
         "I close my eyes again. Norman immediately groans."
         n "\"Y'know what? Alright. I'll be there. Get up whenever you're ready.\""
         hide n
         with dissolve
         "Before I have a chance to reply, he hurries out of the room and closes the door behind him."
-        show screen date("Monday, June 23rd", "Morning")
+        show screen date("Monday, June 23rd")
+        call screen movement()
         #
         # ---TUESDAY--- #
         #
@@ -286,7 +307,7 @@ label start:
         hide text
         with dissolve
         pause 3
-        show screen date("Tuesday, June 24th", "Morning")
+        show screen date("Tuesday, June 24th")
         #
         # ---WEDNESDAY--- #
         #
@@ -301,7 +322,7 @@ label start:
         hide text
         with dissolve
         pause 3
-        show screen date("Wednesday, June 25th", "Morning")
+        show screen date("Wednesday, June 25th")
         #
         # ---THURSDAY--- #
         #
@@ -316,7 +337,7 @@ label start:
         hide text
         with dissolve
         pause 3
-        show screen date("Thursday, June 26th", "Morning")
+        show screen date("Thursday, June 26th")
         #
         # ---FRIDAY--- #
         #
@@ -331,7 +352,7 @@ label start:
         hide text
         with dissolve
         pause 3
-        show screen date("Friday, June 27th", "Morning")
+        show screen date("Friday, June 27th")
         #
         # ---SATURDAY--- #
         #
@@ -346,7 +367,7 @@ label start:
         hide text
         with dissolve
         pause 3
-        show screen date("Saturday, June 28th", "Morning")
+        show screen date("Saturday, June 28th")
         #
         # ---SUNDAY--- #
         #
@@ -360,7 +381,7 @@ label start:
         hide text
         with dissolve
         pause 3
-        show screen date("Sunday, June 29th", "Morning")
+        show screen date("Sunday, June 29th")
         "... It's time to go home."
         scene bg motelroom morning
         with fade
@@ -428,6 +449,9 @@ label start:
             "You got Scott's worst end."
 return
         #
+        # ---LOCATIONS--- #
+        #
+        #
         # ---NPC DIALOGUE--- #
         #
 label npcdialogue:
@@ -438,7 +462,7 @@ label npcdialogue:
         #
         # ---MONDAY--- #
         #
-        if currentday == "Monday" && currenttime == "Morning":
+        if currentday == "Monday" and currenttime == "Morning":
             menu:
                 n "\"Something you need, [name]?\""
                 "Talk" if normantalkedto == 0:
@@ -447,7 +471,7 @@ label npcdialogue:
                     player "\"Mmhm… You seemed excited about this place.\""
                     n "\"What can I say? I like trying new food.\""
                     player "\"Does it bother you that we're stuck here?\""
-                    n "\"Nah. It's just another adventure, right?\""
+                    n "\"Nah. It's just a bump in the road, right?\""
                     menu:
                         n "\"What happened with the van is weird, but… I’m not worried.\""
                         "\"That doesn't seem smart.\"":
@@ -638,7 +662,7 @@ label npcdialogue:
         #
         # ---MONDAY--- #
         #
-        if currentday == "Monday" && currenttime == "Morning":
+        if currentday == "Monday" and currenttime == "Morning":
             menu:
                 k "\"[surname].\""
                 "Talk" if kesslertalkedto == 0:
@@ -661,7 +685,7 @@ label npcdialogue:
                     menu:
                         k "\"Should get going soon...\""
                         "\"I'll join you!\"":
-                            k "\"... Okay? Why not.\""
+                            k "\"... Okay? Actually. Sure. Why not.\""
                             k "\"Don't tell nobody I'm letting you come along though.\""
                             $ monevent == "Daniel"
                             jump kesslermon
@@ -671,11 +695,11 @@ label npcdialogue:
                 "Leave":
                     "Kessler nods."
                     return
-        elif currenttime == "Evening" && monevent == "Daniel":
+        elif currenttime == "Evening" and monevent == "Daniel":
             k "\"Thanks for tagging along today, [surname].\""
             k "\"It's not protocol, but... Figured it wouldn't hurt. Not like you're a suspect.\""
             player "\"Why did you let me come along, anyway?\""
-            "He shrugs."
+            "He shrugs, scratching at his beard."
             return
         #
         # ---TUESDAY--- #
@@ -792,13 +816,14 @@ label npcdialogue:
                     l "\"Mike told me about your weird plant van. Don't worry about it, that happens all the time around here.\""
                     player "\"What? Really?!\""
                     l "\"Psh, no.\""
+                    "She cracks a sly smirk, closing her magazine to look at me and lowering her voice dramatically."
                     menu:
-                        l "\"Don't be surprised if people start talking to you about the Coyote Creek Monster though.\""
+                        l "\"Don't be surprised if people start talking to you about the Coyote Creek Monster, though.\""
                         "\"I really do not care about a monster.\"":
                             l "\"Geez, you sound like that asshole detective.\""
                             $ lizpoints -= 1
                         "\"That sounds cool as hell.\"":
-                            l "\"Yeah, it's pretty cool. It summons plants and shit.\""
+                            l "\"It summons plants and shit.\""
                             $ lizpoints += 1
                     l "\"Dad used to tell me and Scott stories about it when we were kids. Obviously they're just silly stories, but...\""
                     l "\"I dunno. Stuff like that always feels kind of real when you're a kid.\""
@@ -920,6 +945,279 @@ label npcdialogue:
         elif currentday == "Sunday":
             return
         #
+        # ---BRANDY--- #
+        #
+    label brandydialogue:
+        #
+        # ---MONDAY--- #
+        #
+        if currentday == "Monday":
+            return
+        #
+        # ---TUESDAY--- #
+        #
+        elif currentday == "Tuesday":
+            return
+        #
+        # ---WEDNESDAY--- #
+        #
+        elif currentday == "Wednesday":
+            return
+        #
+        # ---THURSDAY--- #
+        #
+        elif currentday == "Thursday":
+            return
+        #
+        # ---FRIDAY--- #
+        #
+        elif currentday == "Friday":
+            return
+        #
+        # ---SATURDAY--- #
+        #
+        elif currentday == "Saturday":
+            return
+        #
+        # ---SUNDAY--- #
+        #
+        elif currentday == "Sunday":
+            return
+        #
+        # ---LORI--- #
+        #
+    label loridialogue:
+        #
+        # ---MONDAY--- #
+        #
+        if currentday == "Monday":
+            return
+        #
+        # ---TUESDAY--- #
+        #
+        elif currentday == "Tuesday":
+            return
+        #
+        # ---WEDNESDAY--- #
+        #
+        elif currentday == "Wednesday":
+            return
+        #
+        # ---THURSDAY--- #
+        #
+        elif currentday == "Thursday":
+            return
+        #
+        # ---FRIDAY--- #
+        #
+        elif currentday == "Friday":
+            return
+        #
+        # ---SATURDAY--- #
+        #
+        elif currentday == "Saturday":
+            return
+        #
+        # ---SUNDAY--- #
+        #
+        elif currentday == "Sunday":
+            return
+        #
+        # ---MARIE--- #
+        #
+    label mariedialogue:
+        #
+        # ---MONDAY--- #
+        #
+        if currentday == "Monday":
+            return
+        #
+        # ---TUESDAY--- #
+        #
+        elif currentday == "Tuesday":
+            return
+        #
+        # ---WEDNESDAY--- #
+        #
+        elif currentday == "Wednesday":
+            return
+        #
+        # ---THURSDAY--- #
+        #
+        elif currentday == "Thursday":
+            return
+        #
+        # ---FRIDAY--- #
+        #
+        elif currentday == "Friday":
+            return
+        #
+        # ---SATURDAY--- #
+        #
+        elif currentday == "Saturday":
+            return
+        #
+        # ---SUNDAY--- #
+        #
+        elif currentday == "Sunday":
+            return
+        #
+        # ---BILLY--- #
+        #
+    label billydialogue:
+        #
+        # ---MONDAY--- #
+        #
+        if currentday == "Monday":
+            return
+        #
+        # ---TUESDAY--- #
+        #
+        elif currentday == "Tuesday":
+            return
+        #
+        # ---WEDNESDAY--- #
+        #
+        elif currentday == "Wednesday":
+            return
+        #
+        # ---THURSDAY--- #
+        #
+        elif currentday == "Thursday":
+            return
+        #
+        # ---FRIDAY--- #
+        #
+        elif currentday == "Friday":
+            return
+        #
+        # ---SATURDAY--- #
+        #
+        elif currentday == "Saturday":
+            return
+        #
+        # ---SUNDAY--- #
+        #
+        elif currentday == "Sunday":
+            return
+        #
+        # ---HERNANDEZ--- #
+        #
+    label hernandezdialogue:
+        #
+        # ---MONDAY--- #
+        #
+        if currentday == "Monday":
+            return
+        #
+        # ---TUESDAY--- #
+        #
+        elif currentday == "Tuesday":
+            return
+        #
+        # ---WEDNESDAY--- #
+        #
+        elif currentday == "Wednesday":
+            return
+        #
+        # ---THURSDAY--- #
+        #
+        elif currentday == "Thursday":
+            return
+        #
+        # ---FRIDAY--- #
+        #
+        elif currentday == "Friday":
+            return
+        #
+        # ---SATURDAY--- #
+        #
+        elif currentday == "Saturday":
+            return
+        #
+        # ---SUNDAY--- #
+        #
+        elif currentday == "Sunday":
+            return
+        #
+        # ---HASTIIN--- #
+        #
+    label hastiindialogue:
+        #
+        # ---MONDAY--- #
+        #
+        if currentday == "Monday":
+            return
+        #
+        # ---TUESDAY--- #
+        #
+        elif currentday == "Tuesday":
+            return
+        #
+        # ---WEDNESDAY--- #
+        #
+        elif currentday == "Wednesday":
+            return
+        #
+        # ---THURSDAY--- #
+        #
+        elif currentday == "Thursday":
+            return
+        #
+        # ---FRIDAY--- #
+        #
+        elif currentday == "Friday":
+            return
+        #
+        # ---SATURDAY--- #
+        #
+        elif currentday == "Saturday":
+            return
+        #
+        # ---SUNDAY--- #
+        #
+        elif currentday == "Sunday":
+            return
+        #
+        # ---JOAQUIN--- #
+        #
+    label joaquindialogue:
+        #
+        # ---MONDAY--- #
+        #
+        if currentday == "Monday":
+            return
+        #
+        # ---TUESDAY--- #
+        #
+        elif currentday == "Tuesday":
+            return
+        #
+        # ---WEDNESDAY--- #
+        #
+        elif currentday == "Wednesday":
+            return
+        #
+        # ---THURSDAY--- #
+        #
+        elif currentday == "Thursday":
+            return
+        #
+        # ---FRIDAY--- #
+        #
+        elif currentday == "Friday":
+            return
+        #
+        # ---SATURDAY--- #
+        #
+        elif currentday == "Saturday":
+            return
+        #
+        # ---SUNDAY--- #
+        #
+        elif currentday == "Sunday":
+            return
+        #
         # ---JAVIER--- #
         #
     label javierdialogue:
@@ -957,7 +1255,46 @@ label npcdialogue:
         # ---SUNDAY--- #
         #
         elif currentday == "Sunday":
-            return   
+            return
+        #
+        # ---RILEY--- #
+        #
+    label rileydialogue:
+        #
+        # ---MONDAY--- #
+        #
+        if currentday == "Monday":
+            return
+        #
+        # ---TUESDAY--- #
+        #
+        elif currentday == "Tuesday":
+            return
+        #
+        # ---WEDNESDAY--- #
+        #
+        elif currentday == "Wednesday":
+            return
+        #
+        # ---THURSDAY--- #
+        #
+        elif currentday == "Thursday":
+            return
+        #
+        # ---FRIDAY--- #
+        #
+        elif currentday == "Friday":
+            return
+        #
+        # ---SATURDAY--- #
+        #
+        elif currentday == "Saturday":
+            return
+        #
+        # ---SUNDAY--- #
+        #
+        elif currentday == "Sunday":
+            return
         #
         # ---ROMANTIC EVENTS--- #
         #
@@ -1015,6 +1352,7 @@ label romanticevents:
             "In front of the station sits his patrol vehicle, a Crown Vic with the symbol of the County Sheriff’s Office emblazoned on the doors."
             "He takes a moment to fish his keys from his pocket, grumbling in annoyance, before opening the door and taking a seat. I follow suit."
             k "\"... What brings you to Coyote Creek?\""
+            "I shrug, pausing a moment. How do you explain it?"
             player "\"It's a bit weird...\""
             "He shrugs and turns the key in the ignition, starting up the car. He pulls out onto the road and turns to head deeper into the town."
             player "\"My friend’s van broke down. We’re on a road trip.\""
@@ -1071,7 +1409,32 @@ label romanticevents:
             "Kessler is just staring at the plants on the ground."
             k "\"... I mean.\""
             k "\"I just don't get the {i}why{/i} in this situation, you know? I can get some kid busting in and stealing a mascot, but...\""
-            he "\"The weird plants, yeah. Agreed.\""
+            he "\"The plants, yeah. Agreed.\""
+            "This whole situation is just... Bizarre. I don't know how else to describe it."
+            "I have no idea why someone would stuff a shitton of plants into someone's engine block, or why they'd scatter them around a high school gym for that matter."
+            "The two police officers don't look any less confused than I feel."
+            "Hernandez sighs, pinching the bridge of her nose, and shakes her head."
+            he "\"Look, Kessler, I hope you figure this out. I really do. But it just seems to make so little sense...\""
+            k "\"C'mon now. There's sense behind everything in the end, even if it ain't so obvious.\""
+            "Hernandez hands over the evidence bag containing the sneaker with a nod."
+            he "\"Welp. I sure as heck hope you find out what the hell is going on in this town.\""
+            "Kessler holds the bag up to the light, examining the shoe."
+            k "\"Pretty sure I will. Figure Cinderella here's gotta know something.\""
+            "He turns to me, looking satisfied."
+            k "\"... Well. Still interested in tagging along? Finding out who owns this thing?\""
+            player "\"Are you kidding? I feel like I'm in a crime movie, lead the way.\""
+            "Kessler smiles, amused."
+            k "\"So, gut instinct. Probably a teenager. I got a couple ideas of who to talk to, but I reckon they'd open up more to a guy like you than to me.\""
+            player "Wow. So I'm pretending to be an undercover cop, huh?"
+            "Kessler holds up a finger and digs around in his pocket, eventually producing a crumpled napkin with some kind of notes haphazardly scrawled upon it."
+            "He hands it over to me. His fingers brush against mine as the napkin exchanges hands. His hands are rough."
+            "I unfold it, pushing that thought out of my mind. There are four names."
+            k "\"Those are some kids around town who apparently got themselves a bit of a reputation for causing trouble.\""
+            k "\"Now, what I find interesting here is that the Chief of Police's own daughter is on there. The mayor's son, too.\""
+            k "\"Hernandez insists it ain't her daughter, but... You know.\""
+            "Does he suspect some familial bias? He scratches at his stubble, thinking."
+            k "\"... Well, anyway. Figure these names are as good a place to start as any. Could go take a look at your engine, etiher.\""
+            player "\"I guess we're investigating a mystery then.\""
             return
         label kesslertue:
             

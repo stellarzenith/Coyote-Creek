@@ -81,13 +81,100 @@ style frame:
 ## In-game screens
 ################################################################################
 
-screen date(currentdate, currenttime):
+screen date(currentdate):
     vbox:
         xalign 0.1
         yalign 0.1
         text currentdate
         text currenttime
+        
+## Movement Screen ##################################################################
+##
+## Defines every location within the game.
 
+screen movement():
+    
+    ## Set the current location
+    add "locations/[currentloc]/background_[currenttime].png"
+    
+    ## Place clickable items
+    if currentloc == "motelroom":
+        ## Motel Room > Motel Front
+        imagebutton idle "locations/motelroom/motelfront_door_[currenttime].png":
+            action SetVariable("currentloc", "motelfront"), Show("movement")
+    
+    elif currentloc == "motelfront":
+        ## Motel Front > Motel Room
+        imagebutton idle "locations/motelfront/motelroom_door_[currenttime].png":
+            action SetVariable("currentloc", "motelroom"), Show("movement")
+        ## Motel Front > Motel Lobby
+        imagebutton idle "locations/motelfront/motellobby_door_[currenttime].png":
+            action SetVariable("currentloc", "motellobby"), Show("movement")
+    
+    elif currentloc == "motellobby":
+        ## Motel Lobby > Motel Front
+        imagebutton idle "locations/motellobby/motelfront_door_[currenttime].png":
+            action SetVariable("currentloc", "motelfront"), Show("movement")
+        ## Motel Lobby > Gift Store
+        imagebutton idle "locations/motellobby/giftstore_door_[currenttime].png":
+            action SetVariable("currentloc", "giftstore"), Show("movement")
+        
+    elif currentloc == "giftstore":
+        ## Gift Store > Motel Lobby
+        imagebutton idle "locations/giftstore/motellobby_door_[currenttime].png":
+            action SetVariable("currentloc", "motellobby"), Show("movement")
+    
+    ## Place characters
+    if normanloc == currentloc:
+        imagebutton idle "locations/[currentloc]/norman_[currenttime].png":
+            action Jump("normandialogue")
+    if mikeloc == currentloc:
+        imagebutton idle "locations/[currentloc]/mike_[currenttime].png":
+            action Jump("mikedialogue")
+    if kesslerloc == currentloc:
+        imagebutton idle "locations/[currentloc]/kessler_[currenttime].png":
+            action Jump("kesslerdialogue")
+    if scottloc == currentloc:
+        imagebutton idle "locations/[currentloc]/scott_[currenttime].png":
+            action Jump("scottdialogue")
+    if lizloc == currentloc:
+        imagebutton idle "locations/[currentloc]/liz_[currenttime].png":
+            action Jump("lizdialogue")
+    if julieloc == currentloc:
+        imagebutton idle "locations/[currentloc]/julie_[currenttime].png":
+            action Jump("juliedialogue")
+    if rosaloc == currentloc:
+        imagebutton idle "locations/[currentloc]/rosa_[currenttime].png":
+            action Jump("rosadialogue")
+    if brandyloc == currentloc:
+        imagebutton idle "locations/[currentloc]/brandy_[currenttime].png":
+            action Jump("brandydialogue")
+    if loriloc == currentloc:
+        imagebutton idle "locations/[currentloc]/lori_[currenttime].png":
+            action Jump("loridialogue")
+    if marieloc == currentloc:
+        imagebutton idle "locations/[currentloc]/marie_[currenttime].png":
+            action Jump("mariedialogue")
+    if billyloc == currentloc:
+        imagebutton idle "locations/[currentloc]/billy_[currenttime].png":
+            action Jump("billydialogue")
+    if joaquinloc == currentloc:
+        imagebutton idle "locations/[currentloc]/joaquin_[currenttime].png":
+            action Jump("joaquindialogue")
+    if hastiinloc == currentloc:
+        imagebutton idle "locations/[currentloc]/hastiin_[currenttime].png":
+            action Jump("hastiindialogue")
+    if hernandezloc == currentloc:
+        imagebutton idle "locations/[currentloc]/hernandez_[currenttime].png":
+            action Jump("hernandezdialogue")
+    if javierloc == currentloc:
+        imagebutton idle "locations/[currentloc]/javier_[currenttime].png":
+            action Jump("javierdialogue")
+    if rileyloc == currentloc:
+        imagebutton idle "locations/[currentloc]/riley_[currenttime].png":
+            action Jump("rileydialogue")
+            
+            
 ## Say screen ##################################################################
 ##
 ## The say screen is used to display dialogue to the player. It takes two
