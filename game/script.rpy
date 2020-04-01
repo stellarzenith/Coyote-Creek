@@ -73,8 +73,8 @@ label start:
     $ normanloc = "none"
     $ mikeloc = "none"
     $ kesslerloc = "none"
-    $ scottloc = "none"
-    $ lizloc = "none"
+    $ scottloc = "giftstore"
+    $ lizloc = "motellobby"
     $ julieloc = "none"
     $ rosaloc = "none"
     $ brandyloc = "none"
@@ -291,7 +291,6 @@ label start:
         hide n
         with dissolve
         "Before I have a chance to reply, he hurries out of the room and closes the door behind him."
-        show screen date("Monday, June 23rd")
         call screen movement()
         #
         # ---TUESDAY--- #
@@ -307,7 +306,6 @@ label start:
         hide text
         with dissolve
         pause 3
-        show screen date("Tuesday, June 24th")
         #
         # ---WEDNESDAY--- #
         #
@@ -322,7 +320,6 @@ label start:
         hide text
         with dissolve
         pause 3
-        show screen date("Wednesday, June 25th")
         #
         # ---THURSDAY--- #
         #
@@ -337,7 +334,6 @@ label start:
         hide text
         with dissolve
         pause 3
-        show screen date("Thursday, June 26th")
         #
         # ---FRIDAY--- #
         #
@@ -352,7 +348,6 @@ label start:
         hide text
         with dissolve
         pause 3
-        show screen date("Friday, June 27th")
         #
         # ---SATURDAY--- #
         #
@@ -367,7 +362,6 @@ label start:
         hide text
         with dissolve
         pause 3
-        show screen date("Saturday, June 28th")
         #
         # ---SUNDAY--- #
         #
@@ -381,7 +375,6 @@ label start:
         hide text
         with dissolve
         pause 3
-        show screen date("Sunday, June 29th")
         "... It's time to go home."
         scene bg motelroom morning
         with fade
@@ -735,6 +728,8 @@ label npcdialogue:
         # ---SCOTT--- #
         #
     label scottdialogue:
+        scene bg [currentloc] [currenttime]
+        show s
         #
         # ---MONDAY--- #
         #
@@ -742,6 +737,7 @@ label npcdialogue:
             menu:
                 s "\"Hey, Mr. [surname], welcome!\""
                 "Talk" if scotttalkedto == 0:
+                    $ scotttalkedto = 1
                     player "\"Uh. What is that on the wall.\""
                     s "\"What, you mean the skeleton? That's Buffalo Bones, don't worry about it. He's great.\""
                     player "\"Um.\""
@@ -760,15 +756,16 @@ label npcdialogue:
                         s "\"How're you feeling about that tour offer?\""
                         "\"Sure, I'd really like that.\"":
                             s "\"Let's get going then!\""
-                            $ monevent = "Scott"
-                            jump scottmon
+                            ##$ monevent = "Scott"
+                            ##jump scottmon
+                            s "\"... Riiight after that's programmed in.\""
+                            "... What is he talking about?"
                         "\"Hold on, I need to do something.\"":
                             s "\"No worries!\""
-                            return
-                    jump scottdialogue
                 "Leave":
                     s "\"Appreciate the visit!\""
-                    return
+            hide s
+            call screen movement()
         #
         # ---TUESDAY--- #
         #
@@ -803,11 +800,14 @@ label npcdialogue:
         # ---LIZ--- #
         #
     label lizdialogue:
+        scene bg [currentloc] [currenttime]
+        show l
         #
         # ---MONDAY--- #
         #
         if currentday == "Monday":
             menu:
+                "Liz reads her magazine intently."
                 "Talk" if liztalkedto == 0:
                     $ liztalkedto = 1
                     l "\"Your friend left in a hurry.\""
@@ -827,15 +827,16 @@ label npcdialogue:
                             $ lizpoints += 1
                     l "\"Dad used to tell me and Scott stories about it when we were kids. Obviously they're just silly stories, but...\""
                     l "\"I dunno. Stuff like that always feels kind of real when you're a kid.\""
-                    jump lizdialogue
                 "Talk" if liztalkedto == 1:
                     if lizpoints == 1:
+                        l "\"Let me know if you need anything.\""
                         l "\"Talk to you later, [name].\""
                     elif lizpoints == -1:
                         "Liz keeps looking at her magazine."
-                    jump lizdialogue
                 "Leave":
-                    return
+                    pass
+            hide l
+            call screen movement()
         #
         # ---TUESDAY--- #
         #
@@ -1435,7 +1436,8 @@ label romanticevents:
             "Does he suspect some familial bias? He scratches at his stubble, thinking."
             k "\"... Well, anyway. Figure these names are as good a place to start as any. Could go take a look at your engine, etiher.\""
             player "\"I guess we're investigating a mystery then.\""
-            return
+            $ currentloc = "gym"
+            call screen movement()
         label kesslertue:
             
             return

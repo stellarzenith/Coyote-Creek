@@ -81,13 +81,6 @@ style frame:
 ## In-game screens
 ################################################################################
 
-screen date(currentdate):
-    vbox:
-        xalign 0.1
-        yalign 0.1
-        text currentdate
-        text currenttime
-        
 ## Movement Screen ##################################################################
 ##
 ## Defines every location within the game.
