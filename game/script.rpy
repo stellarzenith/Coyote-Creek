@@ -37,6 +37,7 @@ define c = Character("Coyote Craig")
 define ccm = Character("The Coyote Creek Monster")
 image black = "#000"
 
+
 label start:
         #
         # ---VARIABLES--- #
@@ -60,7 +61,7 @@ label start:
     $ rileypoints = 0
         # ---Current day & location--- #
     $ currentday = "Monday"
-    $ currenttime = "Morning"
+    $ currenttime = "day"
     $ currentloc = "motelroom"
         # ---Events done--- #
     $ monevent = "none"
@@ -70,9 +71,9 @@ label start:
     $ frievent = "none"
     $ satevent = "none"
         # ---NPC Locations--- #
-    $ normanloc = "none"
-    $ mikeloc = "none"
-    $ kesslerloc = "none"
+    $ normanloc = "diner"
+    $ mikeloc = "garagefront"
+    $ kesslerloc = "motelfront"
     $ scottloc = "giftstore"
     $ lizloc = "motellobby"
     $ julieloc = "none"
@@ -103,6 +104,12 @@ label start:
     $ hastiintalkedto = 0
     $ javiertalkedto = 0
     $ rileytalkedto = 0
+        # ---Unlocked Locations--- #
+    $ mainstreet = False
+    $ highschool = False
+    $ forest = False
+    $ farm = False
+    $ ridge = False
         # ---Array of every talked to status. Resets every day--- #
     $ talkedto = [normantalkedto, miketalkedto, kesslertalkedto, scotttalkedto, liztalkedto, julietalkedto, rosatalkedto, brandytalkedto, loritalkedto, marietalkedto, billytalkedto, joaquintalkedto, hernandeztalkedto, hastiintalkedto, javiertalkedto, rileytalkedto]
 
@@ -136,11 +143,11 @@ label start:
         "Norman, my best friend, took it in stride, as he does with most things. To him, a breakdown is just another adventure on the road trip. He’s always had that optimism."
         "His chipper demeanor faded into one of confusion once he popped the hood and immediately saw why the van was no longer running."
         "The entire thing was overgrown with plant life."
-        scene bg southmain afternoon
+        scene bg garagefront day
         with fade
-        "Now the van sits on Main Street, with myself and Norman slumped against it in the dust. We both gasp for breath and pass a bottle of water between us, drenched in sweat. The sun is high in the sky and beating down hard."
+        "Now the van sits outside the local garage, with myself and Norman slumped against it in the dust. We both gasp for breath and pass a bottle of water between us, drenched in sweat. The sun is high in the sky and beating down hard."
         "Norman turns to me, a smile on his face in spite of his clear exhaustion, and breathes in relief."
-        show n
+        show norman
         with dissolve
         n "\"Are you as hungry as I am right now?\""
         "I am pretty hungry, I notice. I had been too busy pushing the van to realise until now."
@@ -153,16 +160,16 @@ label start:
         n "\"How about you see the mechanic about it? I'll find us some food.\""
         "Before disappearing, he waves over his shoulder and shouts."
         n "\"I’ll try to find a local map too!\""
-        hide n
+        hide norman
         with dissolve
         "With that, he’s gone, and I’m left alone."
-        scene bg garage afternoon
+        scene bg garage day
         with fade
         "The air inside the garage is thick with the smell of oil. It’s almost hard to breathe."
         "I hear music from a cassette player on one of the many shelves that line the walls. The only other noise is that of the mechanic himself at work underneath a jacked up car."
         "All I can see of him are his legs, and occasionally his hand reaching for a new tool. He hums to the chorus of the song playing."
         "He pushes himself out from underneath the car and sits up to wipe his forehead, still tapping his foot to the music. He notices me standing there, and stands to greet me with a smile on his face."
-        show m
+        show mike
         with dissolve
         "His hair is short, messy and slick with motor oil. From the various patches sewn clumsily onto his jumpsuit, it’s clear that he’s a fan of science fiction."
         "He cleans off his glasses and leans against the car, still smiling at me."
@@ -172,12 +179,12 @@ label start:
         player "\"We have a... uh... Strange problem.\""
         "Mike chuckles and gestures to the door behind me."
         m "\"Alright? Let's go see what the problem is.\""
-        hide m
+        hide mike
         with dissolve
-        scene bg southmain afternoon
+        scene bg garagefront day
         with fade
         "Mike follows me out to the van, whistling the tune from his cassette player."
-        show m
+        show mike
         with dissolve
         m "\"Let's see your strange problem then.\""
         "I open the driver-side door and pop the hood."
@@ -193,14 +200,14 @@ label start:
         m "\"Well. I'll try to clear this out. I reckon it'll take a few days... But I'll try.\""
         m "\"There's a motel right across the street if you're looking for a place to stay. The owners are good friends of mine.\""
         player "\"I guess I'll go check it out. Thanks Mike.\""
-        hide m
+        hide mike
         with dissolve
-        scene bg motel afternoon
+        scene bg motel day
         with fade
         "The motel lobby is way too brightly lit. The decorating in here is tacky, and it’s clear they don’t get a lot of business."
         "Behind the front desk sits a woman with light hair and green eyes who doesn’t look like she wants to be there at all."
         "She’s flipping through a magazine absentmindedly. I don’t think she’s even noticed I’m here yet."
-        show l
+        show liz
         with dissolve
         unknown "\"... Can I help you?\""
         "Yes she has."
@@ -209,42 +216,40 @@ label start:
         unknown "\"Rates are listed here. Sign and I'll get you a key.\""
         "I get a room with two beds. The woman hands me a key and picks up her magazine again."
         l "\"Thanks. I'm Liz, by the way. If you need anything I'm usually here. If not, my brother runs the gift store next door.\""
-        hide l
+        hide liz
         with dissolve
         window show
-        scene bg motel afternoon
+        scene bg motel day
         with hpunch
         window auto
         "When I turn to check out said gift store, I find myself bumping into someone on their way in."
-        show k
+        show daniel
         with dissolve
         unknown "\"‘scuse me.\""
         "The man in front of me has dark, curly hair and a scratchy shadow of stubble on his face."
         "He looks at me with tired eyes and nurses the coffee cup in his hand."
         unknown "\"You don't look local. Me neither.\""
-        k "\"Detective Kessler, County Sheriff’s Office. I got called in by the chief.\""
-        k "\"Town's got some kind of vandalism problem.\""
+        k "\"Kessler. Private Investigator. Mayor called me in.\""
+        k "\"Town's got some kind of vandalism problem, from what I hear.\""
         "That’s when I notice a small face peek out from behind him."
-        show j
+        show julie
         with dissolve
-        "Trailing along behind the detective is a young girl who peers up at me cautiously, clutching firmly onto him. Kessler glances down at her."
-        k "\"This is Julie, my daughter.\""
-        j "\"... Hi.\""
-        "Julie tugs on his pants leg urgently, signalling that she does not want to be here right now. The detective sighs and ruffles her hair."
-        k "\"I better get moving.\""
-        "He grumbles to himself and moves past me, toward the rooms."
+        "Trailing along behind the man is a young girl who peers up at me cautiously, clutching firmly onto him. Kessler glances down at her and sighs, ruffling her hair."
+        "She tugs on the leg of his pants urgently, a sign of discomfort."
+        k "\"I better get moving. Got some work to do.\""
+        "He grumbles to himself and moves past me, into the parking lot."
         k "\"Be seeing you.\""
+        hide daniel
+        with dissolve
+        hide julie
+        with dissolve
         "With that, I’m left in the motel lobby with Liz again, who has evidently not been paying attention to our exchange and doesn’t seem to care."
-        hide k
-        with dissolve
-        hide j
-        with dissolve
-        scene bg giftstore afternoon
+        scene bg giftstore day
         with fade
         "The souvenirs that line the shelves look like they've been here for months. There's a layer of dust coating each one."
         "Behind the desk sits a man who has fallen asleep in his wheelchair. Like the main section of the motel, this gift shore doesn't seem to get much business."
         "I clear my throat and make my presence known. The man jolts awake and his eyes light up at the sight of a potential customer."
-        show s
+        show scott
         with dissolve
         "His relation to Liz is evident in his face. He has the same light hair and green eyes, though he looks considerably less stern and more uncertain."
         s "\"Welcome to Cooper's Motel & Gift Store! I'm Scott, what can I do for you?\""
@@ -255,14 +260,14 @@ label start:
         s "\"... It really is an underrated place.\""
         "He snaps out of it and looks back at me, his smile returning to his face."
         s "\"I hope you like it here. Feel free to drop by whenever you want. I've always got time.\""
-        hide s
+        hide scott
         with dissolve
         scene black
         "Norm's van is, for lack of a better term, completely fucked."
         "... It looks like we'll be sticking around here for at least a week while it gets fixed."
         "I have my doubts that anything of note will happen while we're here, but..."
-        scene title
         "... Maybe I'll find myself surprised."
+        $ persistent.seenintro = True
         #
         # ---DAYS OF THE WEEK--- #
         #
@@ -280,18 +285,20 @@ label start:
         "..."
         n "\"Hey, wake up.\""
         n "\"Come on, [name], I'm hungry. Let's go!\""
-        scene bg motelroom morning
+        scene bg motelroom day
         with fade
-        show n
+        show norman
         with dissolve
         player "\"Ugh... What time is it?\""
         n "\"Eight. The diner's doing a breakfast special, come on.\""
         "I close my eyes again. Norman immediately groans."
         n "\"Y'know what? Alright. I'll be there. Get up whenever you're ready.\""
-        hide n
+        hide norman
         with dissolve
         "Before I have a chance to reply, he hurries out of the room and closes the door behind him."
-        call screen movement()
+        scene black
+    label move:
+        call screen movement() with fade
         #
         # ---TUESDAY--- #
         #
@@ -376,7 +383,7 @@ label start:
         with dissolve
         pause 3
         "... It's time to go home."
-        scene bg motelroom morning
+        scene bg motelroom day
         with fade
         "It looks like Norman's already gotten up."
         "I guess I should say goodbye to people before we get in the van."
@@ -440,7 +447,7 @@ label start:
             "You got Scott's bad end."
         else:
             "You got Scott's worst end."
-return
+        return
         #
         # ---LOCATIONS--- #
         #
@@ -455,7 +462,7 @@ label npcdialogue:
         #
         # ---MONDAY--- #
         #
-        if currentday == "Monday" and currenttime == "Morning":
+        if currentday == "Monday" and currenttime == "day":
             menu:
                 n "\"Something you need, [name]?\""
                 "Talk" if normantalkedto == 0:
@@ -490,7 +497,7 @@ label npcdialogue:
                 "Leave":
                     n "\"Later then!\""
                     return
-        elif currenttime == "Evening":
+        elif currenttime == "night":
             return
         #
         # ---TUESDAY--- #
@@ -655,7 +662,7 @@ label npcdialogue:
         #
         # ---MONDAY--- #
         #
-        if currentday == "Monday" and currenttime == "Morning":
+        if currentday == "Monday" and currenttime == "day":
             menu:
                 k "\"[surname].\""
                 "Talk" if kesslertalkedto == 0:
@@ -688,11 +695,6 @@ label npcdialogue:
                 "Leave":
                     "Kessler nods."
                     return
-        elif currenttime == "Evening" and monevent == "Daniel":
-            k "\"Thanks for tagging along today, [surname].\""
-            k "\"It's not protocol, but... Figured it wouldn't hurt. Not like you're a suspect.\""
-            player "\"Why did you let me come along, anyway?\""
-            "He shrugs, scratching at his beard."
             return
         #
         # ---TUESDAY--- #
@@ -729,7 +731,7 @@ label npcdialogue:
         #
     label scottdialogue:
         scene bg [currentloc] [currenttime]
-        show s
+        show scott
         #
         # ---MONDAY--- #
         #
@@ -738,33 +740,64 @@ label npcdialogue:
                 s "\"Hey, Mr. [surname], welcome!\""
                 "Talk" if scotttalkedto == 0:
                     $ scotttalkedto = 1
-                    player "\"Uh. What is that on the wall.\""
-                    s "\"What, you mean the skeleton? That's Buffalo Bones, don't worry about it. He's great.\""
-                    player "\"Um.\""
+                    "Scott's bright eyes watch me hopefully."
+                    s "So... Anything I can do for you?"
+                    "My eyes immediately jump to the tacky model skeleton, propped up on the counter. Its skull is adorned with a gaudy cowboy hat."
+                    "Scott seems to notice my interest and speaks up."
+                    s "That right there is Buffalo Bones."
+                    "He says it with full confidence, as if that alone should explain everything."
+                    player "... Huh?"
+                    "There's a moment of silence before he chuckles sheepishly."
+                    s "He was a Halloween decoration that we never took down."
+                    "Somehow that's more mundane an explanation than I was expecting."
+                    s "Anyway, let me know if anything else catches your eye."
+                    s "We got some postcards, mugs, shirts, some soaps... Carved those myself, by the way."
+                    "I look at the carved soaps. There were similar ones in the bathroom of our motel room."
+                    "Each one is carved crudely into various shapes. Coyotes, horses, rabbits, trees from the local forest..."
+                    "On closer examination it's clear that there are little details that Scott put time and effort into."
+                    "Ridges are etched into the soap in areas where an animal's fur is thicker, or to denote the texture of the trees."
                     menu:
-                        s "\"So what's your first impression of Coyote Creek? I was actually going to ask if you wanted a quick tour.\""
-                        "\"It's kind of a dump.\"":
-                            $ scottpoints -= 0.5
-                            "He deflates."
-                            s "\"That's a shame.\""
-                        "\"Seems alright so far.\"":
-                            $ scottpoints += 0.5
-                            s "\"Glad you think so!\""
-                    jump scottdialogue
-                "Spend today with Scott" if scotttalkedto == 1:
+                        "Ask about his carvings.":
+                            player "These are really good. Where'd you learn to carve like this?"
+                            "He smiles bashfully."
+                            s "Oh uh, thanks! It was... Well."
+                            s "My dad showed me how, when I was a kid. Wood carving though, not soap. It works a lot differently."
+                            s "I guess I moved over to soap once we got the motel."
+                            "He shrugs a bit, fidgeting with the hem of his flannel shirt."
+                            "After a moment, he clears his throat and nods to me."
+                            s "I'll throw in a second one for the price of one, if you're looking to buy. Lotta folks who blow through don't ask about it."
+                            s "I appreciate the interest."
+                            player "Well... Thanks."
+                            "He nods quickly."
+                        "Move on to something else.":
+                            pass
+                    s "Oh- By the way, how much of the town have you seen?"
+                    player "Barely any of it."
+                    s "Looking for a tour? I don't know how long you plan on staying, but I could show you a few spots."
+                    "That could be a way to spend the day. I'm not sure what there is to see or do here."
+                    menu:
+                        "Spend today with Scott.":
+                            player "Sure. I could use a tour guide."
+                            "He smiles, wheeling himself out from behind the counter."
+                            s "Alright, let's get going then."
+                            $ monevent = "Scott"
+                            jump scottmon
+                        "Keep exploring for now.":
+                            player "Let me get back to you on that."
+                            s "No worries! I'll be here."
+                "Talk" if scotttalkedto == 1:
                     menu:
                         s "\"How're you feeling about that tour offer?\""
                         "\"Sure, I'd really like that.\"":
-                            s "\"Let's get going then!\""
-                            ##$ monevent = "Scott"
-                            ##jump scottmon
-                            s "\"... Riiight after that's programmed in.\""
-                            "... What is he talking about?"
+                            "He smiles, wheeling himself out from behind the counter."
+                            s "Alright, let's get going then."
+                            $ monevent = "Scott"
+                            jump scottmon
                         "\"Hold on, I need to do something.\"":
-                            s "\"No worries!\""
+                            s "\"No worries! I'll be here.\""
                 "Leave":
                     s "\"Appreciate the visit!\""
-            hide s
+            hide scott
             call screen movement()
         #
         # ---TUESDAY--- #
@@ -801,7 +834,7 @@ label npcdialogue:
         #
     label lizdialogue:
         scene bg [currentloc] [currenttime]
-        show l
+        show liz
         #
         # ---MONDAY--- #
         #
@@ -1349,95 +1382,7 @@ label romanticevents:
         #
     label kesslerevents:
         label kesslermon:
-            "Kessler drains his coffee and wordlessly heads outside, signalling that I should follow with a subtle tilt of his head."
-            "In front of the station sits his patrol vehicle, a Crown Vic with the symbol of the County Sheriff’s Office emblazoned on the doors."
-            "He takes a moment to fish his keys from his pocket, grumbling in annoyance, before opening the door and taking a seat. I follow suit."
-            k "\"... What brings you to Coyote Creek?\""
-            "I shrug, pausing a moment. How do you explain it?"
-            player "\"It's a bit weird...\""
-            "He shrugs and turns the key in the ignition, starting up the car. He pulls out onto the road and turns to head deeper into the town."
-            player "\"My friend’s van broke down. We’re on a road trip.\""
-            k "\"Sounds straightforward.\""
-            player "\"Well, yeah but. The engine is full of plants.\""
-            "Kessler glances toward me before turning his eyes back to the road."
-            k "\"I might want a look at that engine, if you don’t mind.\""
-            player "\"You’d have to ask Norman. It’s his baby.\""
-            k "\"That your friend? Alright.\""
-            player "\"There's also the issue of it being looked at by the mechanic right now...\""
-            k "\"Yeah, I'll talk to Nez.\""
-            "After a short journey, the car rolls to a stop, and Kessler pulls the handbrake."
-            k "\"We're here.\""
-            "We step out of the car, into the parking lot of Coyote Creek High. School is clearly out for the summer, and there’s only one other car here; A local police vehicle."
-            k "\"See, about your plant problem... Turns out, something happened similar to that, right here.\""
-            k "\"Nobody can figure out for shit what happened or how the plants got there. Gonna give the place a once-over.\""
-            k "\"Also, whoever did it stole the mascot too.\""
-            player "\"... Why would someone steal the mascot?\""
-            k "\"I don’t know. I’ve seen pictures. He’s a scary bastard, I wouldn’t want to steal him.\""
-            "He locks the car and heads toward the front door of the school."
-            player "\"So what would make you want to steal a mascot, personally? You did just sort of imply that there is a situation where you would do that.\""
-            "I think I see a smile flash across his face momentarily."
-            k "\"Hm. I’ll have to get back to you on that.\""
-            "We enter the gym of Coyote Creek High, where a woman in a police uniform waits. She looks unimpressed."
-            unknown "\"Took your damn time, Detective.\""
-            "She notices me and her eyes narrow even more."
-            unknown "\"... Who’s this guy?\""
-            k "\"Don’t worry about it, Chief. Just an out-of-towner.\""
-            "I’ve never seen anyone look more exasperated."
-            unknown "\"I can {i}see{/i} that, I mean {i}what is he doing here?{/i}\""
-            "The detective shrugs."
-            unknown "\"...\""
-            he "\"Chief Gabriela Hernandez. Try not to get in the way.\""
-            k "\"Right... Okay. So. What are we lookin' at here?\""
-            "Kessler gestures to the mess that is the gym. The ground is littered with vines. Hernandez sighs and shakes her head, looking dumbfounded."
-            he "\"If I knew what we were lookin' at I wouldn't have called in a county detective...\""
-            he "\"All I know is that I can't figure out who's behind this, or why someone would do this in the first place.\""
-            "I take a closer look at the vines, noting their familiarity."
-            player "\"They do look similar to what we found in Norm's engine...\""
-            k "\"Interesting... When did you notice them?\""
-            "He watches me with intent focus. I have to tear my eyes away from him."
-            player "\"We were near the edge of the forest. Had to push it all the way into town. This was yesterday morning.\""
-            k "\"Huh. Must've happened while you were stopped.\""
-            player "\"I uh... Was asleep. Norman could probably tell you more details.\""
-            "Kessler nods, shooting a glance to Hernandez."
-            k "\"Got any suspects?\""
-            he "\"Well... I did find something.\""
-            "She produces an evidence bag. In it is a single worn-out sneaker."
-            he "\"Someone left here in a rush. Lost their shoe. We find the owner and I think we've got ourselves a lead.\""
-            "Kessler grunts in acknowledgement, scanning the room thoughtfully. His eyes settle on one of the windows, left wide open."
-            k "\"... That open when it was reported?\""
-            he "\"Uh huh. Caretaker swears to God it was shut when he left last night, though.\""
-            he "\"I think that's the point of exit, but not entry. The gym door is locked with a padlock usually, but that was on the ground outside.\""
-            "Kessler is just staring at the plants on the ground."
-            k "\"... I mean.\""
-            k "\"I just don't get the {i}why{/i} in this situation, you know? I can get some kid busting in and stealing a mascot, but...\""
-            he "\"The plants, yeah. Agreed.\""
-            "This whole situation is just... Bizarre. I don't know how else to describe it."
-            "I have no idea why someone would stuff a shitton of plants into someone's engine block, or why they'd scatter them around a high school gym for that matter."
-            "The two police officers don't look any less confused than I feel."
-            "Hernandez sighs, pinching the bridge of her nose, and shakes her head."
-            he "\"Look, Kessler, I hope you figure this out. I really do. But it just seems to make so little sense...\""
-            k "\"C'mon now. There's sense behind everything in the end, even if it ain't so obvious.\""
-            "Hernandez hands over the evidence bag containing the sneaker with a nod."
-            he "\"Welp. I sure as heck hope you find out what the hell is going on in this town.\""
-            "Kessler holds the bag up to the light, examining the shoe."
-            k "\"Pretty sure I will. Figure Cinderella here's gotta know something.\""
-            "He turns to me, looking satisfied."
-            k "\"... Well. Still interested in tagging along? Finding out who owns this thing?\""
-            player "\"Are you kidding? I feel like I'm in a crime movie, lead the way.\""
-            "Kessler smiles, amused."
-            k "\"So, gut instinct. Probably a teenager. I got a couple ideas of who to talk to, but I reckon they'd open up more to a guy like you than to me.\""
-            player "Wow. So I'm pretending to be an undercover cop, huh?"
-            "Kessler holds up a finger and digs around in his pocket, eventually producing a crumpled napkin with some kind of notes haphazardly scrawled upon it."
-            "He hands it over to me. His fingers brush against mine as the napkin exchanges hands. His hands are rough."
-            "I unfold it, pushing that thought out of my mind. There are four names."
-            k "\"Those are some kids around town who apparently got themselves a bit of a reputation for causing trouble.\""
-            k "\"Now, what I find interesting here is that the Chief of Police's own daughter is on there. The mayor's son, too.\""
-            k "\"Hernandez insists it ain't her daughter, but... You know.\""
-            "Does he suspect some familial bias? He scratches at his stubble, thinking."
-            k "\"... Well, anyway. Figure these names are as good a place to start as any. Could go take a look at your engine, etiher.\""
-            player "\"I guess we're investigating a mystery then.\""
-            $ currentloc = "gym"
-            call screen movement()
+            return
         label kesslertue:
             
             return
@@ -1458,7 +1403,156 @@ label romanticevents:
         #
     label scottevents:
         label scottmon:
-            
+            scene black
+            "Scott greets Liz as we head out, passing through the motel parking lot and making our way to the main street."
+            scene bg mainstreet day
+            "The streets are dusty with desert sand. Evergreen trees stretch upward in the distance, marking the presence of a forest."
+            "I keep pace behind Scott on the sidewalk as he leads me through town, gesturing to various locations as we pass."
+            show scott
+            s "O'Reilly's is pretty much the only place in town to get a drink, if that's your speed."
+            s "Ah. Town hall's right here too. That's where you'd find the mayor."
+            "He looks up, above the rooftops, and gestures to the trees."
+            s "We're actually right next to a national forest here."
+            player "I didn't think the Kaibab came out this far. At least not on my maps."
+            "Scott shakes his head."
+            s "It doesn't. That's Coyote Creek National Forest."
+            "Weird. I don't remember reading about that."
+            s "It's lesser-known and pretty small."
+            s "The district ranger used to visit us a lot..."
+            "He goes quiet suddenly, eyes scanning the street as if searching for something else to talk about."
+            menu:
+                "\"Used to? Not anymore?\"":
+                    "He bristles slightly as I say that."
+                    s "Well, uh... He was a friend of my dad."
+                    s "Not really around anymore. That's all."
+                    "The atmosphere is tense now. I feel like it's a sore subject."
+                "\"District ranger?\"":
+                    $ scottpoints += 1
+                    "He releases a breath."
+                    s "That'd be Javier Carillo. Tall guy, serious face. Usually in his field uniform. Easy to spot."
+                    s "He's usually over at O'Reilly's later in the evening."
+            hide scott
+            "We spend a while checking out various places around town and chatting."
+            "Eventually though, we start to get hungry."
+            scene bg diner day
+            "We make our way to the diner, and I open up the door to see Norman in one of the booths."
+            "He grins, waving me over."
+            show norman
+            n "[name]! You need to try one of these burgers."
+            show norman at left
+            show scott
+            s "I usually go for the pizza."
+            "A young woman in a uniform scoffs as she passes by, lightly tapping Scott on the shoulder and placing a milkshake down on Norman's table."
+            show brandy
+            unknown "You're the only one who does, Scotty. Rosa's burger is legendary."
+            s "I know, I know, I have no taste."
+            "She smirks, flipping open her notepad."
+            unknown "Damn right. What can I get you boys?"
+            s "You know me, Brandy. The usual."
+            b "Uh huh. What about you?"
+            "She turns to me expectantly."
+            menu:
+                "Burger.":
+                    $ normanpoints += 0.5
+                    "Brandy chuckles, and Norman flashes a smile my way."
+                    "Scott shakes his head and sighs dramatically, though his attempt at feigning sadness is rendered unsuccessful by his grin."
+                    s "Some day it wont be just me."
+                "Pizza.":
+                    $ scottpoints += 0.5
+                    $ pizza = True
+                    "Scott laughs, throwing both fists up in triumph. Norman chuckles, and Brandy rolls her eyes."
+                    s "See? It's not just me!"
+            b "Mhm, whatever you say."
+            "She smirks again, jotting down my order."
+            b "We'll have that out soon."
+            s "Thanks, Brandy."
+            hide brandy
+            "She heads toward the kitchen, leaving me with Scott and Norman."
+            "Norman takes a sip of his milkshake and nods to Scott."
+            n "Thanks again for those maps, by the way."
+            s "Sure, happy to help. Are you guys staying in town for long?"
+            n "The repair guy's ripping pine needles out of my engine block, so... Who knows?"
+            n "Shouldn't be more than a few days, right?"
+            player "I haven't gotten around to the specifics on that with Mike yet."
+            n "I'll talk to him later. Damn, I don't even wanna think about what it's gonna cost."
+            "Scott looks between us, confusion written on his face."
+            s "Pine needles?"
+            "Norman leans forward in his seat, eyes wide."
+            n "Dead serious man, the engine was full of plants. No joke."
+            s "What, did you drive through the forest or something?"
+            "Norman frowns, shaking his head."
+            n "Nah, we didn't touch the forest. It's all been desert, we've been on the highway for a while."
+            "Fascination overtakes Scott's face."
+            s "That's crazy."
+            show brandy
+            "Conversation continues, and Brandy returns with our food."
+            "The pizza is probably the greasiest I've ever seen. Scott's eyes light up at the sight of it."
+            s "Very nice. Say thanks to Rosa for me."
+            if pizza:
+                "My own plate houses a similarly greasy pizza slice that smells heavily of molten cheese. I need to use a handful of napkins to pick it up."
+                b "And a pizza slice for you. Enjoy."
+            else:
+                "My own plate houses a burger encased in fresh, hot frybread. The smell of cooked beef patty and various peppers wafts upward."
+                b "Rosa's Navajo burger. Enjoy."
+            hide brandy
+            hide norman
+            hide scott
+            "We dig in, talking idly between bites. Eventually, Norman excuses himself to head to the bathroom."
+            "Scott expresses a particular interest in our problem."
+            show scott
+            s "How did the plants get into the engine?"
+            player "I was asleep in the back, but Norm woke me up. Must have been a few miles out on the highway."
+            s "You pushed the van all that way?"
+            "I feel exhausted just thinking about it. Norman had gone downstairs and bought at least six water bottles once we got settled in the motel."
+            "Actually, he would have bought those from Scott, now that I think of it."
+            player "Yeah... Still feeling the ache from that."
+            "He smiles apologetically."
+            s "Ouch..."
+            if scottpoints >= 2:
+                "He seems to think for a moment, chewing on a mouthful of pizza."
+                s "Hey. Let's head over to O'Reilly's tonight. My treat. Maybe some relaxation would be good."
+                s "If you'd rather not, that's fine, but the offer's on the table."
+                player "Thanks, Scott. I'll think about it."
+            show norman
+            "It's at that moment that Norman bursts into the room loudly, looking shaken."
+            player "Norm...?"
+            n "Th... I... There's plants everywhere!"
+            s "What?!"
+            scene bg bathroom
+            "... What the fuck?"
+            player "This is exactly what our engine was like!"
+            show norman
+            n "I was washing my hands and it just appeared out of nowhere!"
+            show scott
+            s "What in the..."
+            unknown "What's happening in there?"
+            s "Shit... That's Rosa."
+            n "I didn't do this!"
+            show rosa
+            "A woman in an apron appears in the doorway, who I assume to be Rosa."
+            ro "Scott?"
+            "We all stand there dumbly as she slowly takes in the sight of what has happened to her diner's bathroom."
+            "Shock turns to confusion turns to hurt."
+            ro "... I'm going to call Gabriela. Wait outside, please."
+            scene bg diner day
+            show norman
+            show scott
+            "We spend the next few minutes in tense confusion, waiting for the Chief of Police to arrive."
+            show hernandez
+            "It's intimidating to see her roll up in her cruiser. We have no way to explain how this happened."
+            "Norman especially looks nervous."
+            he "Chief Hernandez. Coyote Creek Police Department."
+            s "Listen, Chief, I don't think it was either of these guys. There's no way."
+            he "Slow down, Cooper. What happened?"
+            show rosa
+            ro "I hear yelling from the bathroom, I walk in and..."
+            ro "Just... Look. I cannot explain."
+            "Hernandez sighs, making her way to the scene."
+            scene black
+            "She interviews all of us. There's not much to say. It's as unexplainable as what happened to our engine."
+            "I don't think she trusts us. Especially since Norman was the one to find both."
+            scene bg motelroom night
+            call screen movement()
             return
         label scotttue:
             

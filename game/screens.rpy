@@ -80,6 +80,53 @@ style frame:
 ################################################################################
 ## In-game screens
 ################################################################################
+screen skipintro():
+    hbox:
+        xalign .75
+        textbutton _("Skip Intro"):
+            action Hide("skipintro"), Jump("monday")
+
+screen map():
+    ## Show map
+    add "map/base.png"
+    ## Motel
+    imagebutton idle "map/motel.png":
+        focus_mask True
+        action SetVariable("currentloc", "motelfront"), Hide("map"), Hide("movement", fade), Jump("move")
+    ## Garage
+    imagebutton idle "map/garage.png":
+        focus_mask True
+        action SetVariable("currentloc", "garagefront"), Hide("map"), Hide("movement", fade), Jump("move")
+    ## Diner
+    imagebutton idle "map/diner.png":
+        focus_mask True
+        action SetVariable("currentloc", "diner"), Hide("map"), Hide("movement", fade), Jump("move")
+    ## Main Street
+    if mainstreet:
+        imagebutton idle "map/mainstreet.png":
+            focus_mask True
+            action SetVariable("currentloc", "mainstreet"), Hide("map"), Hide("movement", fade), Jump("move")
+    ## High School
+    if highschool:
+        imagebutton idle "map/highschool.png":
+            focus_mask True
+            action SetVariable("currentloc", "highschool"), Hide("map"), Hide("movement", fade), Jump("move")
+    ## Forest
+    if forest:
+        imagebutton idle "map/forest.png":
+            focus_mask True
+            action SetVariable("currentloc", "forest"), Hide("map"), Hide("movement", fade), Jump("move")
+    ## Farm
+    if farm:
+        imagebutton idle "map/farm.png":
+            focus_mask True
+            action SetVariable("currentloc", "farm"), Hide("map"), Hide("movement", fade), Jump("move")
+    ## Ridge
+    if ridge:
+        imagebutton idle "map/ridge.png":
+            focus_mask True
+            action SetVariable("currentloc", "ridge"), Hide("map"), Hide("movement", fade), Jump("move")
+
 
 ## Movement Screen ##################################################################
 ##
@@ -87,107 +134,162 @@ style frame:
 
 screen movement():
     
-    ## Set the current location
+    ## Show the current location
     add "locations/[currentloc]/background_[currenttime].png"
-    
+
     ## Place clickable items
-    if currentloc == "motelroom":
-        ## Motel Room > Motel Front
-        imagebutton idle "locations/motelroom/motelfront_door_[currenttime].png":
+    if currentloc == "bar":
+        ## Main Street Door
+        imagebutton idle "locations/bar/mainstreet_door.png":
             focus_mask True
-            action SetVariable("currentloc", "motelfront"), Show("movement")
-    
-    elif currentloc == "motelfront":
-        ## Motel Front > Motel Room
-        imagebutton idle "locations/motelfront/motelroom_door_[currenttime].png":
+            action SetVariable("currentloc", "mainstreet"), Hide("movement", fade), Jump("move")
+        ## Javier
+        if javierloc == "bar":
+            imagebutton idle "locations/bar/javier.png":
+                focus_mask True
+                action Jump("javierdialogue")
+        ## Riley
+        if rileyloc == "bar":
+            imagebutton idle "locations/bar/riley.png":
+                focus_mask True
+                action Jump("rileydialogue")
+        ## Scott
+        if scottloc == "bar":
+            imagebutton idle "locations/bar/scott.png":
+                focus_mask True
+                action Jump("scottdialogue")
+
+    elif currentloc == "bathroom":
+        ## Diner Door
+        imagebutton idle "locations/bathroom/diner_door.png":
             focus_mask True
-            action SetVariable("currentloc", "motelroom"), Show("movement")
-        ## Motel Front > Motel Lobby
-        imagebutton idle "locations/motelfront/motellobby_door_[currenttime].png":
+            action SetVariable("currentloc", "diner"), Hide("movement", fade), Jump("move")
+
+    elif currentloc == "diner":
+        ## Bathroom Door
+        imagebutton idle "locations/diner/bathroom_door.png":
             focus_mask True
-            action SetVariable("currentloc", "motellobby"), Show("movement")
-    
-    elif currentloc == "motellobby":
-        ## Motel Lobby > Motel Front
-        imagebutton idle "locations/motellobby/motelfront_door_[currenttime].png":
+            action SetVariable("currentloc", "bathroom"), Hide("movement", fade), Jump("move")
+        ## Norman
+        if normanloc == "diner":
+            imagebutton idle "locations/diner/norman.png":
+                focus_mask True
+                action Jump("normandialogue")
+        ## Brandy
+        if brandyloc == "diner":
+            imagebutton idle "locations/diner/brandy.png":
+                focus_mask True
+                action Jump("brandydialogue")
+        ## Rosa
+        if rosaloc == "diner":
+            imagebutton idle "locations/diner/rosa.png":
+                focus_mask True
+                action Jump("rosadialogue")
+
+    elif currentloc == "forest":
+        ## Guard Station Door
+        imagebutton idle "locations/forest/station_door.png":
             focus_mask True
-            action SetVariable("currentloc", "motelfront"), Show("movement")
-        ## Motel Lobby > Gift Store
-        imagebutton idle "locations/motellobby/giftstore_door_[currenttime].png":
+            action SetVariable("currentloc", "station"), Hide("movement", fade), Jump("move")
+
+    elif currentloc == "garage":
+        ## Garage Front Door
+        imagebutton idle "locations/garage/garagefront_door.png":
             focus_mask True
-            action SetVariable("currentloc", "giftstore"), Show("movement")
-        
+            action SetVariable("currentloc", "garagefront"), Hide("movement", fade), Jump("move")
+        ## RV Door
+        imagebutton idle "locations/garage/rv_door.png":
+            focus_mask True
+            action SetVariable("currentloc", "garagefront"), Hide("movement", fade), Jump("move")
+        ## Mike
+        if mikeloc == "garage":
+            imagebutton idle "locations/garage/mike.png":
+                focus_mask True
+                action Jump("mikedialogue")
+
+    elif currentloc == "garagefront":
+        ## Garage Door
+        imagebutton idle "locations/garagefront/garage_door.png":
+            focus_mask True
+            action SetVariable("currentloc", "garage"), Hide("movement", fade), Jump("move")
+
     elif currentloc == "giftstore":
-        ## Gift Store > Motel Lobby
+        ## Motel Lobby Door
         imagebutton idle "locations/giftstore/motellobby_door_[currenttime].png":
             focus_mask True
-            action SetVariable("currentloc", "motellobby"), Show("movement")
-    
-    ## Place characters
-    if normanloc == currentloc:
-        imagebutton idle "locations/[currentloc]/norman_[currenttime].png":
+            action SetVariable("currentloc", "motellobby"), Hide("movement", fade), Jump("move")
+        ## Scott
+        if scottloc == "giftstore":
+            imagebutton idle "locations/giftstore/scott_[currenttime].png":
+                focus_mask True
+                action Jump("scottdialogue")
+
+    elif currentloc == "mainstreet":
+        ## Bar Door
+        imagebutton idle "locations/mainstreet/bar_door.png":
             focus_mask True
-            action Jump("normandialogue")
-    if mikeloc == currentloc:
-        imagebutton idle "locations/[currentloc]/mike_[currenttime].png":
+            action SetVariable("currentloc", "bar"), Hide("movement", fade), Jump("move")
+        ## Town Hall Door
+        imagebutton idle "locations/mainstreet/townhall_door.png":
             focus_mask True
-            action Jump("mikedialogue")
-    if kesslerloc == currentloc:
-        imagebutton idle "locations/[currentloc]/kessler_[currenttime].png":
+            action SetVariable("currentloc", "townhall"), Hide("movement", fade), Jump("move")
+
+    elif currentloc == "motelfront":
+        ## Motel Room Door
+        imagebutton idle "locations/motelfront/motelroom_door_[currenttime].png":
             focus_mask True
-            action Jump("kesslerdialogue")
-    if scottloc == currentloc:
-        imagebutton idle "locations/[currentloc]/scott_[currenttime].png":
+            action SetVariable("currentloc", "motelroom"), Hide("movement", fade), Jump("move")
+        ## Motel Lobby Door
+        imagebutton idle "locations/motelfront/motellobby_door_[currenttime].png":
             focus_mask True
-            action Jump("scottdialogue")
-    if lizloc == currentloc:
-        imagebutton idle "locations/[currentloc]/liz_[currenttime].png":
+            action SetVariable("currentloc", "motellobby"), Hide("movement", fade), Jump("move")
+        ## Kessler
+        #imagebutton idle "locations/motelfront/kessler_[currenttime].png":
+        #    focus_mask True
+        #    action Jump("kesslerdialogue")
+
+    elif currentloc == "motellobby":
+        ## Motel Front Door
+        imagebutton idle "locations/motellobby/motelfront_door_[currenttime].png":
             focus_mask True
-            action Jump("lizdialogue")
-    if julieloc == currentloc:
-        imagebutton idle "locations/[currentloc]/julie_[currenttime].png":
+            action SetVariable("currentloc", "motelfront"), Hide("movement", fade), Jump("move")
+        ## Gift Store Door
+        imagebutton idle "locations/motellobby/giftstore_door_[currenttime].png":
             focus_mask True
-            action Jump("juliedialogue")
-    if rosaloc == currentloc:
-        imagebutton idle "locations/[currentloc]/rosa_[currenttime].png":
+            action SetVariable("currentloc", "giftstore"), Hide("movement", fade), Jump("move")
+        ## Liz
+        if lizloc == "motellobby":
+            imagebutton idle "locations/motellobby/liz_[currenttime].png":
+                focus_mask True
+                action Jump("lizdialogue")
+
+    elif currentloc == "motelroom":
+        ## Motel Front Door
+        imagebutton idle "locations/motelroom/motelfront_door_[currenttime].png":
             focus_mask True
-            action Jump("rosadialogue")
-    if brandyloc == currentloc:
-        imagebutton idle "locations/[currentloc]/brandy_[currenttime].png":
+            action SetVariable("currentloc", "motelfront"), Hide("movement", fade), Jump("move")
+        ## Norman
+        if normanloc == "motelroom":
+            imagebutton idle "locations/motelroom/norman_[currenttime].png":
+                focus_mask True
+                action Jump("normandialogue")
+
+    elif currentloc == "rv":
+        ## Garage Door
+        imagebutton idle "locations/rv/garage_door.png":
             focus_mask True
-            action Jump("brandydialogue")
-    if loriloc == currentloc:
-        imagebutton idle "locations/[currentloc]/lori_[currenttime].png":
+            action SetVariable("currentloc", "garage"), Hide("movement", fade), Jump("move")
+
+    elif currentloc == "townhall":
+        ## Main Street Door
+        imagebutton idle "locations/townhall/mainstreet_door.png":
             focus_mask True
-            action Jump("loridialogue")
-    if marieloc == currentloc:
-        imagebutton idle "locations/[currentloc]/marie_[currenttime].png":
+            action SetVariable("currentloc", "mainstreet"), Hide("movement", fade), Jump("move")
+
+    hbox:
+        imagebutton idle "map_icon.png":
             focus_mask True
-            action Jump("mariedialogue")
-    if billyloc == currentloc:
-        imagebutton idle "locations/[currentloc]/billy_[currenttime].png":
-            focus_mask True
-            action Jump("billydialogue")
-    if joaquinloc == currentloc:
-        imagebutton idle "locations/[currentloc]/joaquin_[currenttime].png":
-            focus_mask True
-            action Jump("joaquindialogue")
-    if hastiinloc == currentloc:
-        imagebutton idle "locations/[currentloc]/hastiin_[currenttime].png":
-            focus_mask True
-            action Jump("hastiindialogue")
-    if hernandezloc == currentloc:
-        imagebutton idle "locations/[currentloc]/hernandez_[currenttime].png":
-            focus_mask True
-            action Jump("hernandezdialogue")
-    if javierloc == currentloc:
-        imagebutton idle "locations/[currentloc]/javier_[currenttime].png":
-            focus_mask True
-            action Jump("javierdialogue")
-    if rileyloc == currentloc:
-        imagebutton idle "locations/[currentloc]/riley_[currenttime].png":
-            focus_mask True
-            action Jump("rileydialogue")
+            action Show("map"), Hide("movement")
             
 ## Say screen ##################################################################
 ##
